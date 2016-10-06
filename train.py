@@ -17,7 +17,7 @@ xp = np #cuda.cupy
 
 def compute_loss(model, sequences, answer):
     loss = 0
-    rows, cols = answer.shape
+    rows, cols, v = answer.shape
     length_of_sequence = cols
     for i in range(cols - 1):
         x = chainer.Variable(
@@ -30,7 +30,7 @@ def compute_loss(model, sequences, answer):
             xp.asarray(
                 [answer[j, i + 1] for j in range(rows)],
                 dtype=np.float32
-            )[:, np.newaxis]
+            )
         )
         loss += model(x, t)
     return loss
